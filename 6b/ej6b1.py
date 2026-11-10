@@ -60,14 +60,45 @@ Nota: Verifiqueu que el fitxer de logs s'hagi creat.
 """
 import logging
 
+# Configuramos el sistema lo log
+logging.basicConfig(
+    level=logging.DEBUG, # Como mínimo necesitamos que nos guarde el nivel INFO.
+    format="%(levelname)s:%(message)s", # Nos indica hora, nivel y mensaje.
+    filename="production.log", # Nombre del fichero log.
+    filemode='w', # Cada vez que ejecutemos el programa borrará lo que había en el log y empieza de nuevo.
+    force=True
+)
+
 def count_letters(names):
+    
     #Write your code here
-    pass
+    diccionario = {}
+
+    # Recorremos toda la lista
+    for name in names:
+
+        # Por cada nombre comprobamos si existe en el diccionario.
+        # Si existe aumentamos 1 el contador, si no existe lo damos de alta en un nuevo diccionaro.
+        for c in name:
+            if diccionario.get(c) == None:
+                diccionario[c] = 1
+            else:
+                diccionario[c] +=1
+
+    # Devolvemos el resutlado.
+    return diccionario
 
 
 def create_log(names):
+
+    
     #Write your code here
-    pass
+
+    # LLamamos a la función de nombres.
+    letter_counts = count_letters(names)
+
+    logging.debug(f'Letter counts: {letter_counts}')
+
 
 
 # Si quieres probar tu código, descomenta las siguientes líneas y ejecuta el script
