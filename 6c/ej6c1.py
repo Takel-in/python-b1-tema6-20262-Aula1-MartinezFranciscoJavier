@@ -71,11 +71,29 @@ nltk.download("vader_lexicon")
 
 def sentiment_analysis(text):
     #Write your code here
-    pass
+    # Generamos un objeto que se encargará de analizar el texto.
+    # Por defecto el constructor carga el vader_lexicon
+    sia = SentimentIntensityAnalyzer()
+
+    # La función coje el texto y devuelve un valor. Sentimiento Positivo -> Valores positivos.
+    val = sia.polarity_scores(text)
+
+    if val['compound'] > 0.05:
+        return "Positive"
+    elif val['compound'] < -0.05:
+        return "Negative"
+    else:
+        return "Neutral"
+
+
+
+
+
+
 
 
 # Si quieres probar tu código, descomenta las siguientes líneas y ejecuta el script
 # Si vols provar el teu codi, descomenta les línies següents i executa l'script
 
-# text = "This product is okay."
-# print(sentiment_analysis(text))
+text = "This product is okay."
+print(sentiment_analysis(text))

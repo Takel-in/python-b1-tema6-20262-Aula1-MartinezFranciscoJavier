@@ -77,20 +77,34 @@ Exemple:
 
 def read_txt_file(path: str) -> str:
     #Write your code here
-    pass
+    # El VSCode usa como padre otro directorio, añado a path la parte que le falta.
+    # path = "Ejercicios Git Hub/python-b1-tema6-20262-Aula1-MartinezFranciscoJavier/6c/" + path
+
+    # Abrimos el fichero y leemos el contenido..
+    try:
+        with open(path, 'r', encoding="utf-8") as f:
+            x = f.read()
+            return x
+        
+    # Falla la apertura del fichero.
+    except FileNotFoundError as err:
+        raise FileNotFoundError ("ERROR. No se ha encontrado el fichero.")
 
 
 def words_counter(text: str, word: str) -> int:
     #Write your code here
-    pass
+
+    # Contamos el número de veces que aparece una palabra
+    # Pasamos tanto el texto como la palabra a minúsculas ya que en el test no tiene en cuenta la mayúscula y las minúsculas.
+    return text.lower().count(word.lower())
 
 
 # Si quieres probar tu código, descomenta las siguientes líneas y ejecuta el script
 # Si vols provar el teu codi, descomenta les línies següents i executa l'script
-# path = "files/ej6c2_data_engineer.txt"
-# text = read_txt_file(path)
-# print(text[-25:])
+path = "files/ej6c2_data_engineer.txt"
+text = read_txt_file(path)
+print(text[-25:])
 
-# word = "data"
-# count = words_counter(text, word)
-# print(f"The word '{word}' appears {count} times in the text.")
+word = "data"
+count = words_counter(text, word)
+print(f"The word '{word}' appears {count} times in the text.")

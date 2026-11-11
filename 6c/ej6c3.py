@@ -86,24 +86,42 @@ Exemple:
 
 """
 import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 
 def read_parquet_file(path: str) -> pd.DataFrame:
     #Write your code here
-    pass
+    # Path para la prueba en local 
+    # path = "Ejercicios Git Hub/python-b1-tema6-20262-Aula1-MartinezFranciscoJavier/6c/" + path
 
+    # Abrimos el fichero.
+    try:
+        with open(path, "rb") as f:
+            pt = pq.read_table(f)
+            return pt.to_pandas() 
+        
+    except FileNotFoundError as err:
+        raise FileNotFoundError ("ERROR. No se ha encontrado el fichero.")
+    except ValueError as err:
+        raise ValueError ("ERROR. Error en la descodificación del fichero.")
+    except TypeError as err:
+        raise TypeError ("ERROR. Falla algún tipo de varlo en el parámetro.")
+
+    return pd.DataFrame
 
 def calculate_amount_quanity(dataframe: pd.DataFrame):
     #Write your code here
-    pass
-
+    # Generamos una columna con la operación del precio * unidades.
+    dataframe['amount'] = dataframe['price'] * dataframe['units_sold']
+    return dataframe
 
 # Si quieres probar tu código, descomenta las siguientes líneas y ejecuta el script
 # Si vols provar el teu codi, descomenta les línies següents i executa l'script
 
-# df_sales = read_parquet_file("files/sales_products_2020_08.parquet")
-# print(df_sales.columns)
-#
-# df_sales = calculate_amount_quanity(df_sales)
-# print(df_sales.columns)
-# print(df_sales[["price", "units_sold", "amount"]].head())
+df_sales = read_parquet_file("files/sales_products_2020_08.parquet")
+print(df_sales.columns)
+
+df_sales = calculate_amount_quanity(df_sales)
+print(df_sales.columns)
+print(df_sales[["price", "units_sold", "amount"]].head())
